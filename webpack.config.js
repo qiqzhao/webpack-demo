@@ -13,7 +13,7 @@ module.exports = {
     rules: [
       // loader 配置
       {
-        test: /\.css/, // 只检测.css文件
+        test: /\.css$/, // 只检测.css文件
         use: [
           // 执行顺序，从右到左，从上到下
           "style-loader", // 将js中css通过创建style标签添加html文件中生效
@@ -21,7 +21,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.less/, // 只检测.css文件
+        test: /\.less$/, // 只检测.css文件
         // loader: 'xx' 只能使用一个loader
         use: [
           "style-loader",
@@ -45,6 +45,10 @@ module.exports = {
           "stylus-loader", // 将stylus编译成css文件
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif|webp)$/,
+        type: "asset",
+      }
     ],
   },
   // plugin 插件

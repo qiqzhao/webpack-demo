@@ -9,3 +9,7 @@
 - [x] less
 - [x] scss
 - [x] stylus
+
+### picture 
+- [x] resolve
+- [x] optimize
