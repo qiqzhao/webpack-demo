@@ -1,8 +1,9 @@
 # webpack demo
 
-### step
+### config
 
 - [x] basic
+- [x] auto clean old dist
 
 ### style resource
 - [x] css

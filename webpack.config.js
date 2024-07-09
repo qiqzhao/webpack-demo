@@ -9,6 +9,9 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     // 入口文件打包输出文件名
     filename: "static/js/main.js",
+    //自动清空上次打包的信息
+    // 原理：在打包前，将path整个目录内容情况，再进行打包
+    clean: true,
   },
   // 加载器 loader
   module: {
