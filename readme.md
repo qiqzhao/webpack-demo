@@ -7,3 +7,5 @@
 ### style resource
 - [x] css
 - [x] less
+- [x] scss
+- [x] stylus
