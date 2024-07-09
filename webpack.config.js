@@ -67,6 +67,14 @@ module.exports = {
           // [query] 携带其他参数，保留之前文件携带的参数
           filename: "static/images/[hash:10][ext][query]",
         }
+      },
+      {
+        test: /\.(ttf|woff2?)$/,
+        type: "asset/resource", // 不会转base64
+        generator: {
+          // 输出名称
+          filename: "static/media/[hash:10][ext][query]",
+        }
       }
     ]
   },
