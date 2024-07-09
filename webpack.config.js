@@ -69,7 +69,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(ttf|woff2?)$/,
+        test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
         type: "asset/resource", // 不会转base64
         generator: {
           // 输出名称
