@@ -3,4 +3,7 @@
 ### step
 
 - [x] basic
-- [x] handle css loader
+
+### style resource
+- [x] css
+- [x] less

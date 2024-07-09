@@ -20,6 +20,15 @@ module.exports = {
           "css-loader", // 将css资源编译成commonjs的模块到js中
         ],
       },
+      {
+        test: /\.less/, // 只检测.css文件
+        // loader: 'xx' 只能使用一个loader
+        use: [
+          "style-loader",
+          "css-loader",
+          "less-loader", // 将less编译成css
+        ],
+      },
     ],
   },
   // plugin 插件
