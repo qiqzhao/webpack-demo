@@ -12,6 +12,8 @@
   "description": "",
   "devDependencies": {
     "css-loader": "^7.1.2",
+    "eslint": "^9.6.0",
+    "eslint-webpack-plugin": "^4.2.0",
     "less-loader": "^12.2.0",
     "sass": "^1.77.6",
     "sass-loader": "^14.2.1",

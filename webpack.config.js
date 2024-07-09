@@ -1,4 +1,5 @@
 const path = require("path");
+const EslintPlugin = require("eslint-webpack-plugin");
 
 module.exports = {
   // 入口
@@ -58,7 +59,7 @@ module.exports = {
             // 小于10kb的图片转base64
             // 优点：减少请求数量 缺点：体积会更大
             maxSize: 10 * 1024, // 10kb
-          }
+          },
         },
         generator: {
           // 输出图片名称
@@ -66,7 +67,7 @@ module.exports = {
           // [ext] 扩展名，保留之前文件扩展名
           // [query] 携带其他参数，保留之前文件携带的参数
           filename: "static/images/[hash:10][ext][query]",
-        }
+        },
       },
       {
         test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
@@ -74,12 +75,17 @@ module.exports = {
         generator: {
           // 输出名称
           filename: "static/media/[hash:10][ext][query]",
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   // plugin 插件
-  plugins: [],
+  plugins: [
+    new EslintPlugin({
+      // eslint 检测那些文件
+      context: path.resolve(__dirname, "src"),
+    }),
+  ],
   // 模式
   mode: "development",
 };
