@@ -5,8 +5,10 @@ module.exports = {
   entry: "./src/main.js",
   // 输出
   output: {
+    // 所有文件的输出路径
     path: path.resolve(__dirname, "dist"),
-    filename: "main.js",
+    // 入口文件打包输出文件名
+    filename: "static/js/main.js",
   },
   // 加载器 loader
   module: {
@@ -48,8 +50,22 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|webp)$/,
         type: "asset",
+        parser: {
+          dataUrlCondition: {
+            // 小于10kb的图片转base64
+            // 优点：减少请求数量 缺点：体积会更大
+            maxSize: 10 * 1024, // 10kb
+          }
+        },
+        generator: {
+          // 输出图片名称
+          // [hash:10] hash值前10位
+          // [ext] 扩展名，保留之前文件扩展名
+          // [query] 携带其他参数，保留之前文件携带的参数
+          filename: "static/images/[hash:10][ext][query]",
+        }
       }
-    ],
+    ]
   },
   // plugin 插件
   plugins: [],
