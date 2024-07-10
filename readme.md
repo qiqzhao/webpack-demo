@@ -36,3 +36,4 @@
 
 ## advanced
 - [x] source map
+- [x] HMR
