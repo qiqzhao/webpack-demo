@@ -25,4 +25,7 @@
 ### html
 - [x] html-webpack-plugin
 
+### dev env
+- [x] dev server
+
 ## advanced
