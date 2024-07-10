@@ -8,12 +8,12 @@ module.exports = {
   // 输出
   output: {
     // 所有文件的输出路径
-    path: path.resolve(__dirname, "dist"),
+    // 开发模式没有输出
+    path: undefined,
     // 入口文件打包输出文件名
     filename: "static/js/main_bundle.js",
     //自动清空上次打包的信息
     // 原理：在打包前，将path整个目录内容情况，再进行打包
-    clean: true,
   },
   // 加载器 loader
   module: {
@@ -91,12 +91,12 @@ module.exports = {
   plugins: [
     new EslintPlugin({
       // eslint 检测那些文件
-      context: path.resolve(__dirname, "src"),
+      context: path.resolve(__dirname, "../src"),
     }),
     new HTMLWebpackPlugin({
       // 模版，以public/index.html为模版创建新的HTML文件
       // 新的html文件特点 1. 结构和原来一样 2. 自动引入打包输出的资源
-      template: path.resolve(__dirname, "public/index.html"),
+      template: path.resolve(__dirname, "../public/index.html"),
     }),
   ],
   // 开发服务器
