@@ -35,3 +35,4 @@
 - [x] html & js minimizer auto open
 
 ## advanced
+- [x] source map

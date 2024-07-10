@@ -109,4 +109,5 @@ module.exports = {
   ],
   // 模式
   mode: "production",
+  devtool: 'source-map'
 };
