@@ -38,3 +38,4 @@
 - [x] source map
 - [x] HMR
 - [x] oneOf
+- [x] cache eslint & babel

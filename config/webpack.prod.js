@@ -88,8 +88,10 @@ module.exports = {
           {
             test: /\.js$/,
             exclude: /node_modules/, // 排除node_modules中的js文件
-            use: {
-              loader: "babel-loader",
+            loader: "babel-loader",
+            options: {
+              cacheDirectory: true, // 开启babel缓存
+              cacheCompression: false, // 关闭缓存文件压缩
             },
           },
         ],
@@ -101,6 +103,12 @@ module.exports = {
     new EslintPlugin({
       // eslint 检测那些文件
       context: path.resolve(__dirname, "../src"),
+      exclude: "node_modules",
+      cache: true, // 开启缓存
+      cacheLocation: path.relative(
+        __dirname,
+        "../node_modules/.chache/eslintcache"
+      ),
     }),
     new HTMLWebpackPlugin({
       // 模版，以public/index.html为模版创建新的HTML文件

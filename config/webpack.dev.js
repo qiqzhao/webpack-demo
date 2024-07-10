@@ -83,8 +83,10 @@ module.exports = {
           {
             test: /\.js$/,
             exclude: /node_modules/, // 排除node_modules中的js文件
-            use: {
-              loader: "babel-loader",
+            loader: "babel-loader",
+            options: {
+              cacheDirectory: true, // 开启babel缓存
+              cacheCompression: false, // 关闭缓存文件压缩
             },
           },
         ],
