@@ -31,5 +31,7 @@
 ### prod optimize
 - [x] extract css
 - [x] css compatibility
+- [x] css minimizer
+- [x] html & js minimizer auto open
 
 ## advanced
