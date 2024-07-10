@@ -30,5 +30,6 @@
 
 ### prod optimize
 - [x] extract css
+- [x] css compatibility
 
 ## advanced

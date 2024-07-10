@@ -1,7 +1,7 @@
 const path = require("path");
 const EslintPlugin = require("eslint-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   // 入口
@@ -26,6 +26,16 @@ module.exports = {
           // 执行顺序，从右到左，从上到下
           MiniCssExtractPlugin.loader, // 将css提取成单的文件
           "css-loader", // 将css资源编译成commonjs的模块到js中
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  "postcss-preset-env", //能解决大多数样式兼容性问题
+                ],
+              },
+            },
+          },
         ],
       },
       {
@@ -34,6 +44,16 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  "postcss-preset-env", //能解决大多数样式兼容性问题
+                ],
+              },
+            },
+          },
           "less-loader", // 将less编译成css
         ],
       },
@@ -42,6 +62,16 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  "postcss-preset-env", //能解决大多数样式兼容性问题
+                ],
+              },
+            },
+          },
           "sass-loader", // 将sass编译成css文件
         ],
       },
@@ -50,6 +80,16 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  "postcss-preset-env", //能解决大多数样式兼容性问题
+                ],
+              },
+            },
+          },
           "stylus-loader", // 将stylus编译成css文件
         ],
       },
@@ -100,7 +140,7 @@ module.exports = {
       template: path.resolve(__dirname, "../public/index.html"),
     }),
     new MiniCssExtractPlugin({
-      filename: 'static/css/main.css'
+      filename: "static/css/main.css",
     }),
   ],
   // 模式
