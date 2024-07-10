@@ -37,3 +37,4 @@
 ## advanced
 - [x] source map
 - [x] HMR
+- [x] oneOf

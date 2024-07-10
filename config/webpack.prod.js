@@ -2,7 +2,7 @@ const path = require("path");
 const EslintPlugin = require("eslint-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 function getStyleLoader(pre) {
   return [
@@ -38,56 +38,61 @@ module.exports = {
   // 加载器 loader
   module: {
     rules: [
-      // loader 配置
       {
-        test: /\.css$/, // 只检测.css文件
-        use: getStyleLoader(),
-      },
-      {
-        test: /\.less$/, // 只检测.css文件
-        // loader: 'xx' 只能使用一个loader
-        use: getStyleLoader("less-loader"),
-      },
-      {
-        test: /\.s[ac]ss$/,
-        use: getStyleLoader("sass-loader"),
-      },
-      {
-        test: /\.styl$/,
-        use: getStyleLoader("stylus-loader"),
-      },
-      {
-        test: /\.(png|jpe?g|gif|webp)$/,
-        type: "asset",
-        parser: {
-          dataUrlCondition: {
-            // 小于10kb的图片转base64
-            // 优点：减少请求数量 缺点：体积会更大
-            maxSize: 10 * 1024, // 10kb
+        // 每个文件只能被一个loader配置处理
+        oneOf: [
+          // loader 配置
+          {
+            test: /\.css$/, // 只检测.css文件
+            use: getStyleLoader(),
           },
-        },
-        generator: {
-          // 输出图片名称
-          // [hash:10] hash值前10位
-          // [ext] 扩展名，保留之前文件扩展名
-          // [query] 携带其他参数，保留之前文件携带的参数
-          filename: "static/images/[hash:10][ext][query]",
-        },
-      },
-      {
-        test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
-        type: "asset/resource", // 不会转base64
-        generator: {
-          // 输出名称
-          filename: "static/media/[hash:10][ext][query]",
-        },
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/, // 排除node_modules中的js文件
-        use: {
-          loader: "babel-loader",
-        },
+          {
+            test: /\.less$/, // 只检测.css文件
+            // loader: 'xx' 只能使用一个loader
+            use: getStyleLoader("less-loader"),
+          },
+          {
+            test: /\.s[ac]ss$/,
+            use: getStyleLoader("sass-loader"),
+          },
+          {
+            test: /\.styl$/,
+            use: getStyleLoader("stylus-loader"),
+          },
+          {
+            test: /\.(png|jpe?g|gif|webp)$/,
+            type: "asset",
+            parser: {
+              dataUrlCondition: {
+                // 小于10kb的图片转base64
+                // 优点：减少请求数量 缺点：体积会更大
+                maxSize: 10 * 1024, // 10kb
+              },
+            },
+            generator: {
+              // 输出图片名称
+              // [hash:10] hash值前10位
+              // [ext] 扩展名，保留之前文件扩展名
+              // [query] 携带其他参数，保留之前文件携带的参数
+              filename: "static/images/[hash:10][ext][query]",
+            },
+          },
+          {
+            test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
+            type: "asset/resource", // 不会转base64
+            generator: {
+              // 输出名称
+              filename: "static/media/[hash:10][ext][query]",
+            },
+          },
+          {
+            test: /\.js$/,
+            exclude: /node_modules/, // 排除node_modules中的js文件
+            use: {
+              loader: "babel-loader",
+            },
+          },
+        ],
       },
     ],
   },
@@ -109,5 +114,5 @@ module.exports = {
   ],
   // 模式
   mode: "production",
-  devtool: 'source-map'
+  devtool: "source-map",
 };
