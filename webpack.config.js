@@ -77,6 +77,13 @@ module.exports = {
           filename: "static/media/[hash:10][ext][query]",
         },
       },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/, // 排除node_modules中的js文件
+        use: {
+          loader: "babel-loader",
+        },
+      },
     ],
   },
   // plugin 插件
