@@ -1,11 +1,12 @@
 # webpack demo
 
+## Basic
 ### config
 
 - [x] basic
 - [x] auto clean old dist
 
-### style resource
+### style
 - [x] css
 - [x] less
 - [x] scss
@@ -17,6 +18,11 @@
 - [x] resolve
 - [x] optimize
 
-### js resource
+### js
 - [x] eslint
 - [x] babel
+
+### html
+- [x] html-webpack-plugin
+
+## advanced
