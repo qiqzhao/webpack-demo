@@ -28,4 +28,7 @@
 ### dev env
 - [x] dev server
 
+### prod optimize
+- [x] extract css
+
 ## advanced
