@@ -11,11 +11,24 @@ console.log(sum(1, 2, 3, 4, 5));
 
 document.getElementById("btn").onclick = function () {
   /* eslint-disable-next-line import/first */
-  import(/* webpackChunkName: "math" */"./js/math").then(({ mul }) => {
+  import(/* webpackChunkName: "math" */ "./js/math").then(({ mul }) => {
     console.log(mul(2, 3));
   });
 };
 
 if (module.hot) {
   module.hot.accept("./js/sum");
+}
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then((registration) => {
+        console.log("SW registered: ", registration);
+      })
+      .catch((registrationError) => {
+        console.log("SW registration failed: ", registrationError);
+      });
+  });
 }

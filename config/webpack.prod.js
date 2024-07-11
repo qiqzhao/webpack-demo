@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 // CPU 核数
 const threads = os.cpus().length;
@@ -147,6 +148,12 @@ module.exports = {
     // new TerserPlugin({
     //   parallel: threads, // 开启多进程和设置进程数量
     // }),
+    new WorkboxPlugin.GenerateSW({
+      // 这些选项帮助快速启用 ServiceWorkers
+      // 不允许遗留任何“旧的” ServiceWorkers
+      clientsClaim: true,
+      skipWaiting: true,
+    }),
   ],
   optimization: {
     // 压缩操作
@@ -191,8 +198,8 @@ module.exports = {
       chunks: "all",
     },
     runtimeChunk: {
-      name: entrypoint => `runtime-${entrypoint.name}`
-    }
+      name: (entrypoint) => `runtime-${entrypoint.name}`,
+    },
   },
   // 模式
   mode: "production",
