@@ -36,7 +36,11 @@ module.exports = {
     // 开发模式没有输出
     path: undefined,
     // 入口文件打包输出文件名
-    filename: "static/js/main_bundle.js",
+    filename: "static/js/[name].js",
+    // 打包输出其他文件命名
+    chunkFilename: "static/js/[name].chunk.js",
+    //图片、字体等多媒体通过 type:asset处理资源命名方式
+    assetModuleFilename: "static/media/[hash:10][ext][query]",
     //自动清空上次打包的信息
     // 原理：在打包前，将path整个目录内容情况，再进行打包
   },
@@ -73,21 +77,21 @@ module.exports = {
                 maxSize: 10 * 1024, // 10kb
               },
             },
-            generator: {
-              // 输出图片名称
-              // [hash:10] hash值前10位
-              // [ext] 扩展名，保留之前文件扩展名
-              // [query] 携带其他参数，保留之前文件携带的参数
-              filename: "static/images/[hash:10][ext][query]",
-            },
+            // generator: {
+            //   // 输出图片名称
+            //   // [hash:10] hash值前10位
+            //   // [ext] 扩展名，保留之前文件扩展名
+            //   // [query] 携带其他参数，保留之前文件携带的参数
+            //   filename: "static/images/[hash:10][ext][query]",
+            // },
           },
           {
             test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
             type: "asset/resource", // 不会转base64
-            generator: {
-              // 输出名称
-              filename: "static/media/[hash:10][ext][query]",
-            },
+            // generator: {
+            //   // 输出名称
+            //   filename: "static/media/[hash:10][ext][query]",
+            // },
           },
           {
             test: /\.js$/,
@@ -131,7 +135,8 @@ module.exports = {
       template: path.resolve(__dirname, "../public/index.html"),
     }),
     new MiniCssExtractPlugin({
-      filename: "static/css/main.css",
+      filename: "static/css/[name].css",
+      chunkFilename: "static/css/[name].chunk.css",
     }),
   ],
   // 开发服务器
