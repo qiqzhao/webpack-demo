@@ -53,3 +53,10 @@
 - [x] image minimizer
   - [x] Lossless compression
   - [x] Lossy compression
+- [x] code split
+  - multi entry(source code on code-split folder)
+    - [x] basic
+    - [x] extract common module
+    - [x] dynamic load module
+  - single entry(source code on current folder)
+    - [x] basic
