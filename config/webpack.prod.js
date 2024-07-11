@@ -1,8 +1,13 @@
+const os = require("os");
 const path = require("path");
 const EslintPlugin = require("eslint-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+
+// CPU 核数
+const threads = os.cpus().length;
 
 function getStyleLoader(pre) {
   return [
@@ -88,11 +93,21 @@ module.exports = {
           {
             test: /\.js$/,
             exclude: /node_modules/, // 排除node_modules中的js文件
-            loader: "babel-loader",
-            options: {
-              cacheDirectory: true, // 开启babel缓存
-              cacheCompression: false, // 关闭缓存文件压缩
-            },
+            use: [
+              {
+                loader: "thread-loader", // 开启多进程
+                options: {
+                  works: threads, // 进程数
+                },
+              },
+              {
+                loader: "babel-loader",
+                options: {
+                  cacheDirectory: true, // 开启babel缓存
+                  cacheCompression: false, // 关闭缓存文件压缩
+                },
+              },
+            ],
           },
         ],
       },
@@ -109,6 +124,7 @@ module.exports = {
         __dirname,
         "../node_modules/.chache/eslintcache"
       ),
+      threads, // 开启多进程和进程数量
     }),
     new HTMLWebpackPlugin({
       // 模版，以public/index.html为模版创建新的HTML文件
@@ -118,8 +134,22 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "static/css/main.css",
     }),
-    new CssMinimizerPlugin(),
+    // new CssMinimizerPlugin(),
+    // new TerserPlugin({
+    //   parallel: threads, // 开启多进程和设置进程数量
+    // }),
   ],
+  optimization: {
+    // 压缩操作
+    minimizer: [
+      // 压缩 css
+      new CssMinimizerPlugin(),
+      // 压缩 js
+      new TerserPlugin({
+        parallel: threads, // 开启多进程和设置进程数量
+      }),
+    ],
+  },
   // 模式
   mode: "production",
   devtool: "source-map",

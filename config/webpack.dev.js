@@ -1,6 +1,31 @@
+const os = require("os");
 const path = require("path");
 const EslintPlugin = require("eslint-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+
+// CPU 核数
+const threads = os.cpus().length;
+
+function getStyleLoader(pre) {
+  return [
+    MiniCssExtractPlugin.loader, // 将css提取成单的文件
+    "css-loader", // 将css资源编译成commonjs的模块到js中
+    {
+      loader: "postcss-loader",
+      options: {
+        postcssOptions: {
+          plugins: [
+            "postcss-preset-env", //能解决大多数样式兼容性问题
+          ],
+        },
+      },
+    },
+    pre,
+  ].filter(Boolean);
+}
 
 module.exports = {
   // 入口
@@ -23,36 +48,20 @@ module.exports = {
           // loader 配置
           {
             test: /\.css$/, // 只检测.css文件
-            use: [
-              // 执行顺序，从右到左，从上到下
-              "style-loader", // 将js中css通过创建style标签添加html文件中生效
-              "css-loader", // 将css资源编译成commonjs的模块到js中
-            ],
+            use: getStyleLoader(),
           },
           {
             test: /\.less$/, // 只检测.css文件
             // loader: 'xx' 只能使用一个loader
-            use: [
-              "style-loader",
-              "css-loader",
-              "less-loader", // 将less编译成css
-            ],
+            use: getStyleLoader("less-loader"),
           },
           {
             test: /\.s[ac]ss$/,
-            use: [
-              "style-loader",
-              "css-loader",
-              "sass-loader", // 将sass编译成css文件
-            ],
+            use: getStyleLoader("sass-loader"),
           },
           {
             test: /\.styl$/,
-            use: [
-              "style-loader",
-              "css-loader",
-              "stylus-loader", // 将stylus编译成css文件
-            ],
+            use: getStyleLoader("stylus-loader"),
           },
           {
             test: /\.(png|jpe?g|gif|webp)$/,
@@ -83,11 +92,21 @@ module.exports = {
           {
             test: /\.js$/,
             exclude: /node_modules/, // 排除node_modules中的js文件
-            loader: "babel-loader",
-            options: {
-              cacheDirectory: true, // 开启babel缓存
-              cacheCompression: false, // 关闭缓存文件压缩
-            },
+            use: [
+              {
+                loader: "thread-loader", // 开启多进程
+                options: {
+                  works: threads, // 进程数
+                },
+              },
+              {
+                loader: "babel-loader",
+                options: {
+                  cacheDirectory: true, // 开启babel缓存
+                  cacheCompression: false, // 关闭缓存文件压缩
+                },
+              },
+            ],
           },
         ],
       },
@@ -98,11 +117,21 @@ module.exports = {
     new EslintPlugin({
       // eslint 检测那些文件
       context: path.resolve(__dirname, "../src"),
+      exclude: "node_modules",
+      cache: true, // 开启缓存
+      cacheLocation: path.relative(
+        __dirname,
+        "../node_modules/.chache/eslintcache"
+      ),
+      threads, // 开启多进程和进程数量
     }),
     new HTMLWebpackPlugin({
       // 模版，以public/index.html为模版创建新的HTML文件
       // 新的html文件特点 1. 结构和原来一样 2. 自动引入打包输出的资源
       template: path.resolve(__dirname, "../public/index.html"),
+    }),
+    new MiniCssExtractPlugin({
+      filename: "static/css/main.css",
     }),
   ],
   // 开发服务器
@@ -111,6 +140,17 @@ module.exports = {
     port: "3001", // 启动服务器端口号
     open: true, // 是否自动打开浏览器
     hot: true, // 开启HMR功能（整你用于开发环境，生产环境不需要）
+  },
+  optimization: {
+    // 压缩操作
+    minimizer: [
+      // 压缩 css
+      new CssMinimizerPlugin(),
+      // 压缩 js
+      new TerserPlugin({
+        parallel: threads, // 开启多进程和设置进程数量
+      }),
+    ],
   },
   // 模式
   mode: "development",
