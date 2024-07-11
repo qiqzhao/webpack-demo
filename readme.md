@@ -41,3 +41,4 @@
 - [x] cache eslint & babel
 - [x] thread Multiple process
 - [x] three shaking(atuo open on prod)
+- [x] babel
