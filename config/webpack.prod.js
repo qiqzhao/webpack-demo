@@ -181,6 +181,10 @@ module.exports = {
         },
       }),
     ],
+    // 代码分割
+    splitChunks: {
+      chunks: "all",
+    },
   },
   // 模式
   mode: "production",

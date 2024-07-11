@@ -9,6 +9,13 @@ console.log("hello webpack");
 
 console.log(sum(1, 2, 3, 4, 5));
 
+document.getElementById("btn").onclick = function () {
+  /* eslint-disable-next-line import/first */
+  import("./js/math").then(({ mul }) => {
+    console.log(mul(2, 3));
+  });
+};
+
 if (module.hot) {
   module.hot.accept("./js/sum");
 }
