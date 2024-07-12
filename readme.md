@@ -60,3 +60,7 @@
     - [x] dynamic load module
   - single entry(source code on current folder)
     - [x] basic
+
+### project
+
+- [x] react(submodule reac-cli)
