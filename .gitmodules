@@ -1,3 +1,6 @@
 [submodule "code-split"]
 	path = code-split
 	url = git@github.com:qiqzhao/code-split.git
+[submodule "react-cli"]
+	path = react-cli
+	url = git@github.com:qiqzhao/react-cli.git
