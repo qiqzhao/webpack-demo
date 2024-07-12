@@ -64,3 +64,6 @@
 ### project
 
 - [x] react(submodule reac-cli)
+
+### theory
+- [x] loader(demo on submodule loader)
