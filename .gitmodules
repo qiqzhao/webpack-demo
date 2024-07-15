@@ -4,6 +4,6 @@
 [submodule "react-cli"]
 	path = react-cli
 	url = git@github.com:qiqzhao/react-cli.git
-[submodule "loader"]
-	path = loader
-	url = git@github.com:qiqzhao/loader.git
+[submodule "loader-plugin"]
+	path = loader-plugin
+	url = git@github.com:qiqzhao/loader-plugin.git
